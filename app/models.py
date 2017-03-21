@@ -3,12 +3,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login_manager
 
+
 class Employee(UserMixin, db.Model):
     """
     Create an Employee table
     """
 
     # Ensures table will be named in plural and not in singular
+    # as is the name of the model
     __tablename__ = 'employees'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -24,9 +26,8 @@ class Employee(UserMixin, db.Model):
     @property
     def password(self):
         """
-        Prevent password from being accessed
+        Prevent pasword from being accessed
         """
-
         raise AttributeError('password is not a readable attribute.')
 
     @password.setter
@@ -34,23 +35,23 @@ class Employee(UserMixin, db.Model):
         """
         Set password to a hashed password
         """
-
         self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
         """
         Check if hashed password matches actual password
         """
-
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<Employee: {}>'.formate(self.username)
+        return '<Employee: {}>'.format(self.username)
 
-# set up user_loader
+
+# Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
     return Employee.query.get(int(user_id))
+
 
 class Department(db.Model):
     """
@@ -62,10 +63,12 @@ class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    employees = db.relationship('Employee', backref='department', lazy='dynamic')
+    employees = db.relationship('Employee', backref='department',
+                                lazy='dynamic')
 
     def __repr__(self):
         return '<Department: {}>'.format(self.name)
+
 
 class Role(db.Model):
     """
@@ -77,8 +80,8 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    employees = db.relationship('Employee', backref='role', lazy='dynamic')
+    employees = db.relationship('Employee', backref='role',
+                                lazy='dynamic')
 
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
-        
