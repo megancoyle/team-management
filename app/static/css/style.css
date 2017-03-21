@@ -9,11 +9,11 @@ body, h1, h2, h3 {
 }
 
 a, .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
-  color: #aec251;
+  color: #3399ff;
 }
 
 a:hover, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
-  color: #687430;
+  color: #0080ff;
 }
 
 footer {
