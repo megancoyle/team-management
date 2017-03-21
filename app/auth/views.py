@@ -6,13 +6,12 @@ from forms import LoginForm, RegistrationForm
 from .. import db
 from ..models import Employee
 
-@autho.route('/register', methods=['GET', 'POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
     """
     Handle requests to the /register route
     Add an employee to the database through the registration form
     """
-
     form = RegistrationForm()
     if form.validate_on_submit():
         employee = Employee(email=form.email.data,
@@ -20,10 +19,11 @@ def register():
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
                             password=form.password.data)
-        # add employee to database
+
+        # add employee to the database
         db.session.add(employee)
         db.session.commit()
-        flash('You have successfully registered! You may now login')
+        flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
         return redirect(url_for('auth.login'))
