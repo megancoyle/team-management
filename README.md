@@ -36,3 +36,13 @@ os.environ['SQLALCHEMY_DATABASE_URI'] = 'mysql://your-username:your-password@you
 
 from run import app as application
 ```
+
+Create an admin in pythonanywhere's bash console:
+```
+$ flask shell
+>>> from app.models import Employee
+>>> from app import db
+>>> admin = Employee(email="ADD_HERE",username="ADD_HERE",password="ADD_HERE",is_admin=True)
+>>> db.session.add(admin)
+>>> db.session.commit()
+```
