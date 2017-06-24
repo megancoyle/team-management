@@ -18,7 +18,8 @@ def create_app(config_name):
     if os.getenv('FLASK_CONFIG') == "production":
         app = Flask(__name__)
         app.config.update(
-            DATABASE_URL=os.getenv('DATABASE_URL')
+            SECRET_KEY=os.getenv('SECRET_KEY'),
+            SQLALCHEMY_DATABASE_URI=os.getenv('SQLALCHEMY_DATABASE_URI')
         )
     else:
         app = Flask(__name__, instance_relative_config=True)
